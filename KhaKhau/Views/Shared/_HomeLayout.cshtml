@@ -1,0 +1,104 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - KhaKhau</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link href="~/css/site.css" rel="stylesheet" />
+@*  <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/KhaKhau.styles.css" asp-append-version="true" />*@
+	<link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
+   
+</head>
+<body>
+   
+ 
+    <partial name="_HeaderLayout" />
+    
+
+	<!--CONTENT-->
+	<div>
+      
+		@RenderBody()
+	</div>
+    <div class="slider-content">
+        <div class="slider">
+            <!-- Slide 1 -->
+            <div class="image-slide active">
+                <img src="~/images/food1.jpg" alt="Banner 1">
+            </div>
+            <!-- Slide 2 -->
+            <div class="image-slide">
+                <img src="~/images/food2.jpg" alt="Banner 2">
+            </div>
+            <!-- Slide 3 -->
+            <div class="image-slide">
+                <img src="~/images/food3.jpg" alt="Banner 3">
+            </div>
+            <div class="image-slide">
+                <img src="~/images/food4.jpg" alt="Banner 4">
+            </div>
+        </div>
+
+        <!-- Nút điều hướng -->
+        <button class="prev" onclick="moveImageSlide(-1)">&#10094;</button>
+        <button class="next" onclick="moveImageSlide(1)">&#10095;</button>
+    </div>
+    <div class="category">
+        <div class="product-grid">
+            <div class="product-item">
+                <img src="/images/ga-chien-bot.jpg" alt="">
+                <p>Món gà</p>
+            </div>
+            <div class="product-item">
+                <img src="/images/suonnuong.jpg" alt="">
+                <p>Món heo</p>
+            </div>
+            <div class="product-item">
+                <img src="/images/bobittet.png" alt="">
+                <p>Món bò</p>
+            </div>
+            <div class="product-item">
+                <img src="/images/cuasotme.jpg" alt="">
+                <p>Hải sản</p>
+            </div>
+        </div>
+    </div>
+    <div class="contact">
+        <div class="contact-left">
+			<img src="~/images/logo_res.png" />
+            <p>©Copyright 2024 KHAKHAU. All Rights Reserved</p>
+        </div>
+        <div class="contact-right">
+            <h5>CONTACT</h5>
+            <p>Street: D2 street, Ward 25, Binh Thanh District</p>
+            <p>City: Ho Chi Minh</p>
+            <p>State/Province/Area: Ho Chi Minh City</p>
+            <p>Phone number:  (84-8) 3 512 6379/(84-8) 3 804 0955/(84-8) 3 804 0980</p>
+            <p>Email: abcd@email.com</p>
+        </div>
+        <div class="btn-group">
+            <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Action
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <a class="dropdown-item" href="#">Something else here</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Separated link</a>
+            </div>
+        </div>
+    </div>
+    @* <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script> *@
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/main.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

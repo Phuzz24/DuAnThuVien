@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewData["Title"] = "Danh sach mon an";
+}
+
+@* <link href="~/css/site.css" rel="stylesheet" />
+ *@
+ @model IEnumerable<KhaKhau.Areas.Admin.Models.Product>
+ <div class="container-fluid"></div>
+<h1>List Menu</h1>
+<a class="btn btn-light" id="btn-create" asp-area="Admin" asp-controller="ProductManager" asp-action="Add" >Create New</a>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Image</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.Name</td>
+                <td>@product.Price</td>
+                <td>@product.Description</td>
+                <td>@product.Category?.Name</td>
+                <td>
+                    @if(@product.ImageUrl != null)
+                    {
+                        <img src="@product.ImageUrl" alt="Product Images" style="max-width:100px" />
+
+                    }
+                    else
+                    {
+                      <a href="#" role="button" class="btn btn-danger btn-circle btn-sm">
+                            <i class="fa fa-info-circle" aria-hidden="true"></i>
+                        </a> 
+                    }
+                </td>
+                <td>
+                    <a  class="btn btn-info" asp-action="Display" asp-route-id="@product.Id">View</a> 
+                    <a class="btn btn-success" asp-action="Update" asp-route-id="@product.Id">Edit</a> 
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@product.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<style>
+   
+</style>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+

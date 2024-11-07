@@ -1,0 +1,67 @@
+﻿@using KhaKhau.Areas.Identity.Data;
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+<link href="~/font/fontawesome-free-6.6.0-web/css/all.css" rel="stylesheet" />
+
+<link rel="stylesheet" href="~/css/header.css" />
+<div class="header">
+    <div class="logo-container">
+        <img class="navbar-brand" src="~/images/logo_res.png" alt="Logo" />
+    </div>
+    <div class="menu-container">
+        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">TRANG CHỦ</a>
+        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">MENU</a>
+
+        @if (SignInManager.IsSignedIn(User) && User.IsInRole("user"))
+        {
+            <a class="nav-link" asp-controller="Product" asp-action="Index">ĐẶT MÓN ONLINE</a>
+            <a class="nav-link" asp-controller="Product" asp-action="Index">ĐẶT BÀN</a>
+        }
+        else
+        {
+            <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">ĐẶT MÓN ONLINE</a>
+            <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">ĐẶT BÀN</a>
+        }
+        <a class="nav-link" href="#">GIỚI THIỆU</a>
+    </div>
+
+    <div class="auth-container">
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <div class="dropdown">
+                <a href="#" class="nav-link dropdown-toggle" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa-solid fa-user"></i> @UserManager.GetUserName(User)
+                </a>
+                <div class="dropdown-menu" aria-labelledby="userDropdown">
+                    <a class="dropdown-item" asp-controller="Account" asp-action="EditInfo">Xem thông tin cá nhân</a>
+                    <a class="dropdown-item" asp-controller="Account" asp-action="ChangePassword">Đổi mật khẩu</a>
+                    <a class="dropdown-item" href="~/Identity/Account/Logout">Đăng Xuất</a>
+                </div>
+            </div>
+        }
+        else
+        {
+            <a href="~/Identity/Account/Login" class="nav-link"><i class="fa-solid fa-user"></i> ĐĂNG NHẬP</a>
+            <a href="~/Identity/Account/Register" class="nav-link"><i class="fa-solid fa-user-plus"></i> ĐĂNG KÝ</a>
+        }
+    </div>
+
+    <div class="iconz">
+        <a href="#"><i class="fa-solid fa-magnifying-glass"></i></a>
+        <a href="~/Cart"><i class="fa-solid fa-cart-shopping"></i></a>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const menuToggle = document.querySelector(".navbar-toggler");
+        const menuContainer = document.querySelector(".menu-container");
+
+        menuToggle.addEventListener("click", function () {
+            menuContainer.classList.toggle("active");
+        });
+    });
+
+</script>

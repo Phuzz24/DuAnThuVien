@@ -1,0 +1,110 @@
+﻿@model ProDisplayModel
+@using KhaKhau.Areas.Identity.Data;
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+@inject SignInManager<ApplicationUser> SignInManager
+
+@inject UserManager<ApplicationUser> UserManager
+@{
+    Layout = "~/Views/Shared/_DatMonLayout.cshtml";
+}
+
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<div class="my-2">
+    <form asp-action="Index" class="row row-cols-lg-auto g-3 align-items-center">
+        <div class="col-12">
+            <label class="visually-hidden" for="categoryId">Genres</label>
+            <select class="form-select" id="categoryId" name="categoryId">
+                <option selected>Genre</option>
+                @foreach (var category in Model.Categories)
+                {
+                   <option selected="@(category.Id == Model.CategoryId)" value="@category.Id">@category.Name</option>
+                    
+ //<option  value="@category.Id">@category.Name</option>
+                }
+            </select>
+        </div>
+
+        <div class="col-12">
+            <label class="visually-hidden" for="sterm">Search by title</label>
+            <div class="input-group">
+                <div class="input-group-text"></div>
+                <input type="text" class="form-control" value="@Model.STerm" id="sterm" name="sterm" placeholder="Search by title">
+            </div>
+        </div>
+
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Search</button>
+            <a href="Product/Index" class="btn btn-dark">Reset</a>
+        </div>
+    </form>
+</div>
+
+<div class="w-100 mt-4 d-flex flex-wrap ">
+    @foreach (var pro in Model.Products)
+    {
+        <div class="card mx-3 mb-4" style="width: 11rem;">
+            @if (string.IsNullOrEmpty(pro.ImageUrl))
+            {
+                <img style="width:100%;height:180px" src="/images/NoImage.png" class="card-img-top" alt="...">
+
+            }
+            else
+            {
+                <img style="width:100%;height:180px" src="@pro.ImageUrl" class="card-img-top" alt="...">
+            }
+            <div class="card-body">
+                <h5 class="card-title">@pro.Name</h5>
+                <p class="card-text">
+                    <b>Category: </b>@pro.CategoryName <br />
+                    <b>Description: </b>@pro.Description <br />
+                    <b>Price: </b>@pro.Price
+                    @* <br/> <b>@book.Quantity</b> *@
+                </p>
+                @* @if (pro.Quantity > 0)
+                { *@
+                    <button type="button" onclick="add(@pro.Id)" class="btn btn-primary">Add to cart</button>
+              @*   } *@
+              @*   else
+              { 
+                    <span style="border: 1px solid;padding: 5px 8px;color: red;border-radius: 5px;">Out of stock</span>
+                 } *@
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts{
+    <script>
+        alert("Shopping Cart!");
+        async function add(productId) {
+            //      var usernameEl = document.getElementById("username");
+            // if(usernameEl==null){
+            //     window.location.href = "/Identity/Account/Login";
+            //var username=usernameEl.innerText;
+            //  if(username.length<1){
+            //      window.location.href="/Identity/Account/Login";
+            //  }
+            // }
+            try {
+                var response = await fetch(`/Cart/AddItem?productId=${productId}`);
+                if (response.status == 200) {
+                    var result = await response.json();
+                    var cartCountEl = document.getElementById("cartCount");
+                    cartCountEl.innerHTML = result;
+                    window.location.href = "#cartCount";
+                }
+            }
+            catch (err) {
+                console.log(err);
+            }
+        }
+    </script>
+}
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+
+
+
